@@ -74,7 +74,7 @@ def _open_app(app_name: str) -> bool:
             _paste_text(app_name)
             time.sleep(0.6)
             pyautogui.press("enter")
-            time.sleep(2.5)
+            time.sleep(5.0)
             return True
 
         elif os_name == "mac":
@@ -87,7 +87,7 @@ def _open_app(app_name: str) -> bool:
                     ["open", "-a", f"{app_name}.app"],
                     capture_output=True, text=True, timeout=10,
                 )
-            time.sleep(2.5)
+            time.sleep(5.0)
             return result.returncode == 0
 
         else: 
@@ -106,7 +106,7 @@ def _open_app(app_name: str) -> bool:
                     break
                 except FileNotFoundError:
                     continue
-            time.sleep(2.5)
+            time.sleep(5.0)
             return launched
 
     except Exception as e:
