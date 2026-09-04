@@ -2521,7 +2521,7 @@ class MainWindow(QMainWindow):
         # Metrik güncelleme timer'ı
         self._metric_tmr = QTimer(self)
         self._metric_tmr.timeout.connect(self._update_metrics)
-        self._metric_tmr.start(2000)
+        self._metric_tmr.start(1000)
         self._update_metrics()
 
         self._log_sig.connect(self._log.append_log)

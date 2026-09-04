@@ -92,7 +92,7 @@ def get_base_dir():
 BASE_DIR        = get_base_dir()
 API_CONFIG_PATH = BASE_DIR / "config" / "api_keys.json"
 PROMPT_PATH     = BASE_DIR / "core" / "prompt.txt"
-LIVE_MODEL          = "models/gemini-2.5-flash-native-audio-preview-12-2025"
+LIVE_MODEL          = "models/gemini-2.5-flash"
 CHANNELS            = 1
 SEND_SAMPLE_RATE    = 16000
 RECEIVE_SAMPLE_RATE = 24000
@@ -1453,7 +1453,7 @@ class JarvisLive:
                 # thread-pool round-trips (was one asyncio.to_thread per 50ms slice).
                 # Cap at ~200 ms so interrupt() still stops audio within ~200 ms.
                 batch = bytearray(chunk)
-                while len(batch) < 9600:   # 9600 bytes ≈ 200 ms at 24 kHz / 16-bit mono
+                while len(batch) < 2400:   # 2400 bytes ≈ 50 ms at 24 kHz / 16-bit mono
                     try:
                         batch.extend(self.audio_in_queue.get_nowait())
                     except asyncio.QueueEmpty:
@@ -1638,7 +1638,7 @@ class JarvisLive:
             client = _genai.Client(api_key=_get_api_key())
             resp   = await asyncio.to_thread(
                 client.models.generate_content,
-                model="gemini-flash-latest",
+                model="gemini-2.5-flash",
                 contents=prompt,
             )
             summary = (resp.text or "").strip()
